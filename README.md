@@ -1,4 +1,3 @@
 # Euler
-Working through Project Euler Problems in Go
+Working through Project Euler Problems in Go (Poorly)
 
-Problems separated by commits
