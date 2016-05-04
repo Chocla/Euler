@@ -11,19 +11,24 @@ package main
 
 import (
     "fmt"
+    "math"
 )
 
-func main() {
-    answer := 0
-    for i := 1;  ; i++ {
-        for j := 1; j <= 20; j++ {
-            if i % j == 0 && j == 20 { answer = i}
-            if i % j == 0 {continue}
-            if i % j != 0 {break}
-        }
-        if answer > 0 {
-            break
-        }
+func sumsquare(x int) (int){
+    var y float64 = 0
+    for i := 1; i <= x; i++ {
+        y += math.Pow(float64(i),2)
     }
+    return int(y)
+}
+func squaresum(x int) (int){
+    y := 0
+    for i := 1; i <= x; i++ {
+        y += i
+    }
+    return int(math.Pow(float64(y),2))
+}
+func main() {
+    answer := squaresum(100) - sumsquare(100)
     fmt.Println(answer)
 }
