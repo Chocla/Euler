@@ -12,30 +12,33 @@ import (
 
 )
 
-func genproduct(c chan int64, x int64) {
-    for i := 100; i < 1000; i++ {
-        for j := 999; j <= 1000-i; j++ {
-            c <- int64(i*j)
+func product(min, max int)(int){
+    answer := 0
+    for i := min; i <= max; i++ {
+        for j := min; j <= max; j++ {
+            if palindrome(i*j) {
+                if i*j > answer {
+                    answer = i*j
+                }
+            }
         }
     }
+    return answer
 }
-func palindrome(c chan int64)(bool, int64){
-    num := <- c
-    var newnum int
-    var isPalindrome = false
-    for num > 0 {
-        newnum *=10
-        newnum += num%10
-        num /=10
+func palindrome(x int)( isPalindrome bool){
+    isPalindrome = false
+    original := x
+    var tmp int
+    for x > 0 {
+        tmp *=10
+        tmp += x%10
+        x /=10
     }
-    if num == newnum {
+    if original == tmp {
         isPalindrome = true
     }
-    return isPalindrome, num
+    return isPalindrome
 }
 func main() {
-    c := make(chan int64)
-    go genproduct(c,)
-
-
+    fmt.Println(product(100,999))
 }
