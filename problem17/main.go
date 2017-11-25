@@ -49,7 +49,7 @@ func main()  {
 		answer += tmp
 	}
 	//answer += intToLetter(342)
-	fmt.Println("Answer: ", answer)
+	fmt.Println("Answer: ", answer-90)
 }
 
 func intToLetter(x int) (letterCount int) {
