@@ -3,13 +3,10 @@ package main
 import (
 	"fmt"
 )
-
-
 func main(){
-	answer := 0;
+	answer := 1;
 	for i := 1001; i >= 3; i -= 2 {
-		answer += i*i + (i-1)*(i-1) + (i-2)*(i-2) + (i-3)*(i-3)
+		answer += (4*i*i - 12*i + 14)
 	}
-	answer += 1
 	fmt.Println("Answer: ", answer)
 }
