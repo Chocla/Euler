@@ -1,3 +1,3 @@
 # Euler
-Working through Project Euler Problems in Go (Poorly)
+Working through Project Euler Problems in Go 
 
