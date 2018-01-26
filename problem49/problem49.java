@@ -12,7 +12,9 @@ public class problem49 {
     public static final int NUM_LENGTH = 4;
 
     public static void main(String[] args) {
+        long t0 = System.nanoTime();
         findSequences();
+        System.out.println("Time: " + ((System.nanoTime() - t0)/1e9));
     }
 
     public static void findSequences() {
