@@ -3,11 +3,7 @@ package main
 import (
 	"fmt"
 )
-	//How many values of nCr with n \in [1,100] are greater than 1 million
-	//note that the maximum r value is n/2
-	//for each n 23 to 100
-		//for each r from n/2 to 0 until nCr < 1000000
-			//add 2 to the answer counter
+
 func main() {
 	fmt.Println(findAnswer())
 }
@@ -23,7 +19,6 @@ func findAnswer() (count int){
 		}
 			count += int(n - 2*r +1)
 		
-		//fmt.Println(count)
 	}
 	return 
 }
