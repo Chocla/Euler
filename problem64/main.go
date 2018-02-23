@@ -1,89 +1,69 @@
 package main
 
 import (
-	//"math"
+	"time"
 	"math/big"
 	"fmt"
 )
 
 func main() {
-	//fmt.Println(findPeriod(9904))
-	fmt.Println(findOddPeriodsBelow(10000))
+	t0 := time.Now()
+	ans := findOddPeriodsBelow(10000)
+	fmt.Println("Answer: ", ans, "\nTime: ",time.Since(t0))
 }
+
 func findOddPeriodsBelow(uBound int) (count int){
-	
 	for i := 2; i <= uBound; i++ {
 		a := findPeriod(i)
-		fmt.Println(i,a)
-		if a == -1 {
-			fmt.Println("leak for i = ", i)
-			panic("uh oh")
-		}
-		if  a % 2 != 0 {
+		if  a % 2 != 0 { //odd period
 			count++
 		}
 	}
 	return
 }
 //caluculates the period of a sqrt's continued fraction expansion
-
 func findPeriod(val int) (period int) {
 	sequence := make([]int64,0)
 	root := big.NewFloat(float64(val))
-	root.SetPrec(3000)
+	root.SetPrec(3000) //set precision very high so that long sequences don't get messed up from rounding
 	root.Sqrt(root)
 	floor := big.NewInt(0)
-	a := 0
-	secondaryFlag := false
-	f := false
+
+	//algorithm for computing the continued fraction terms
 	for i := 0;; i++ {
-		root.Int(floor) //take floor
+		root.Int(floor) 
 		if root.IsInt() {
-			return 0 
+			return 0 //ignores perfect squares
 		} else {
 			sequence = append(sequence, floor.Int64())
 		}
-		//fmt.Println(a, floor.Int64())
-		if secondaryFlag && int64(a) == floor.Int64(){
-			return (len(sequence) - 1 )/2
-		} else {
-			secondaryFlag = false
-		}
-		f,a = hasPattern(sequence[1:])
+		f,a := hasPattern(sequence[1:])
 		
 		if a == -1 {
 			return 1
 		}
-
 		if f {
-			secondaryFlag = true
-			//return (len(sequence) - 1 )/2
+			return (len(sequence) - 1 )/4
 		}
 		tmp := big.NewFloat(0)
 		tmp.SetInt(floor)
-		//fmt.Println(root.String(),floor.String(),a)
 		root.Sub(root,tmp)
 		root.Quo(big.NewFloat(1),root)
 	}
-		
-	
-	//ENDFOR
-
-	return
 }
-//improve to require pattern to occur 3 times before counting it
-func hasPattern(seq []int64) (bool, int) {
-	if len(seq) % 2 != 0 || len(seq) == 0{
-		return false, 0
+
+func hasPattern(seq []int64) (bool,int) {
+	if len(seq) % 4 != 0 || len(seq) == 0 {
+		return false,0
 	}
-	allOneNum := false
+
+	//hack-y fix for fractions with period 1
+	allOneNum := true
 	num := seq[0]
 	for i := 0; i < len(seq); i++ {
 		if seq[i] != num {
+			allOneNum = false
 			break
-		}
-		if i == len(seq) - 1 {
-			allOneNum = true
 		}
 	}
 	if allOneNum {
@@ -92,10 +72,15 @@ func hasPattern(seq []int64) (bool, int) {
 		}
 		return false,0
 	}
-	for i := 0; i < len(seq) / 2; i++ {
-		if seq[i] != seq[i + (len(seq)/2)] {
-			return false,0
+
+	//checks if a pattern repeats 4 times before accepting that it is a pattern
+	for i := 0; i < len(seq)/4; i++ {
+		if seq[i] != seq[i +   len(seq)/4] || 
+		   seq[i] != seq[i +   len(seq)/2] || 
+		   seq[i] != seq[i + 3*len(seq)/4] {
+			return false, 0
 		}
 	}
-	return true,int(seq[0])
+
+	return true,0
 }
