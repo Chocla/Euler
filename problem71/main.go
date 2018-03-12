@@ -6,6 +6,7 @@ import (
 	"fmt"
 )
 const uBound = 1000000
+
 func main() {
 	t0 := time.Now()
 	ans := findAnswer(uBound)
@@ -17,7 +18,7 @@ func findAnswer(max int64) (int64) {
 	upper := big.NewRat(3,7)
 	flag := 0
 	for d := max; flag < 10; d-- { 
-		for n := d / 2; n > lower.Num().Int64() / 4 ; n-- {
+	    for n := d / 2;  ; n-- {
 			if gcd(n,d) == 1 {
 				candidate := big.NewRat(n, d)
 				//find the first n such that n/d is between the current lower bound and 3/7
