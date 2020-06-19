@@ -33,7 +33,6 @@ func findPandigitalFib() (int){
 	for i := 3; ; i++ {
 		a.Add(a,b)
 		a, b = b, a
-		// fmt.Println(i, b) //b is F_i in terms of this problem
 		str := b.String()
 		if i > 45{
 			last := SortString(str[len(str) - 9:])
